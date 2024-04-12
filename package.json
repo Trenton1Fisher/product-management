@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@angular/cli": "^17.3.4"
+  },
+  "scripts": {
+    "ng": "ng"
+  }
+}
+
