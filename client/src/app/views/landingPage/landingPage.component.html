@@ -1,0 +1,22 @@
+<section class="gradient-background h-screen md:pt-48 pt-32 text-center">
+  <h1 class="font-bold text-5xl text-white mb-2">Welcom To ProductPro</h1>
+  <h3 class="font-semibold text-2xl text-white mb-8">
+    Your go-to solution for streamlined product management and optimization
+  </h3>
+  <a
+    href="/dashboard"
+    *ngIf="session; else elseBlock"
+    class="border px-6 py-2 text-lg rounded-full mt-8 text-white hover:bg-white hover:text-black"
+  >
+    View Your Dashboard
+  </a>
+  <ng-template #elseBlock
+    ><a
+      href="/login"
+      class="border px-6 py-2 text-lg rounded-full mt-8 text-white hover:bg-white hover:text-black"
+    >
+      Get Started
+    </a></ng-template
+  >
+</section>
+<section class="h-screen bg-white"></section>

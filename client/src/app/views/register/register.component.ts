@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { SupabaseService } from '../../supabase.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -20,7 +21,8 @@ export class Register {
 
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   async onSubmit(): Promise<void> {
@@ -30,7 +32,7 @@ export class Register {
       const password = this.signInForm.value.password as string;
       const { error } = await this.supabase.signUp(email, password);
       if (error) throw error;
-      alert('Check your email for the login link!');
+      this.router.navigate(['/dashboard']);
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

@@ -1,0 +1,6 @@
+.gradient-background {
+  background-color: #74ebd5;
+  background-image: linear-gradient(90deg, #74ebd5 0%, #9face6 100%);
+
+  /* Adjust the gradient colors and direction as needed */
+}

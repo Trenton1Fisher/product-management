@@ -6,7 +6,6 @@ import {
   createClient,
   Session,
   SupabaseClient,
-  User,
 } from '@supabase/supabase-js';
 import { environment } from '../environments/environment';
 
@@ -33,14 +32,6 @@ export class SupabaseService {
       this._session = data.session;
     });
     return this._session;
-  }
-
-  profile(user: User) {
-    return this.supabase
-      .from('profiles')
-      .select(`username, website, avatar_url`)
-      .eq('id', user.id)
-      .single();
   }
 
   authChanges(
