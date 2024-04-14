@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../supabase.service';
 import { CommonModule } from '@angular/common';
+import AOS from 'aos';
 
 @Component({
   standalone: true,
@@ -14,6 +15,9 @@ export class LandingPage implements OnInit {
   constructor(private readonly supabase: SupabaseService) {}
 
   ngOnInit() {
+    AOS.init({
+      offset: -5,
+    });
     this.supabase.authChanges((_, session) => (this.session = session));
   }
 }

@@ -4,3 +4,10 @@
 
   /* Adjust the gradient colors and direction as needed */
 }
+
+@media (max-width: 1000px) {
+  .about-section {
+    display: flex;
+    flex-direction: column;
+  }
+}
