@@ -1,1 +1,20 @@
-<section>hello</section>
+<div class="flex justify-center items-center h-screen">
+  <div class="text-center">
+    <div *ngIf="loading">
+      <p class="text-xl font-bold">Loading...</p>
+    </div>
+    <ng-container *ngIf="!loading">
+      <div *ngIf="dashboard_exists" class="mb-4">
+        <p class="text-xl font-bold text-green-500">Dashboard exists for now</p>
+      </div>
+      <div *ngIf="!dashboard_exists">
+        <p class="text-xl font-bold mb-4">Oops! No Inventory found</p>
+        <button (click)="createDashboard()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          + Create Your Dashboard
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
