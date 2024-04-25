@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   title = 'client';
   loading = false;
   session = this.supabase.session;
+  showNavbar = true
 
   constructor(
     private readonly supabase: SupabaseService,
@@ -37,5 +38,9 @@ export class AppComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+
+  hasRoute(route: string) {
+    return this.router.url.includes(route);
   }
 }

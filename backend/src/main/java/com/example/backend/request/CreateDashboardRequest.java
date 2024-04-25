@@ -1,6 +1,7 @@
 package com.example.backend.request;
 
 public class CreateDashboardRequest {
+    CreateDashboardRequest(){};
     private String user_id;
 
     public String getUserId() {

@@ -1,20 +1,434 @@
-<div class="flex justify-center items-center h-screen">
-  <div class="text-center">
-    <div *ngIf="loading">
-      <p class="text-xl font-bold">Loading...</p>
-    </div>
-    <ng-container *ngIf="!loading">
-      <div *ngIf="dashboard_exists" class="mb-4">
-        <p class="text-xl font-bold text-green-500">Dashboard exists for now</p>
-      </div>
-      <div *ngIf="!dashboard_exists">
-        <p class="text-xl font-bold mb-4">Oops! No Inventory found</p>
-        <button (click)="createDashboard()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          + Create Your Dashboard
-        </button>
-      </div>
-    </ng-container>
-  </div>
+<div *ngIf="loading" class="h-screen flex justify-center items-center">
+  <p class="text-xl font-bold">Loading...</p>
 </div>
+
+<ng-container *ngIf="!loading">
+  <div class="flex flex-col bg-gray-100 min-h-screen">
+  <header class="flex h-14 lg:h-[60px] items-center gap-4 border-b px-6">
+    <div class="w-full flex-1">
+      <form>
+        <div class="relative">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input
+            class="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white border shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
+            placeholder="Search inventory..."
+            type="search"
+          />
+        </div>
+      </form>
+    </div>
+    <button type="" (click)="signOut()" class="text-white font-bold text-lg p-2 bg-red-500 rounded-lg hover:bg-red-700">Sign Out</button>
+  </header>
+  <main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+    <div class="flex items-center">
+      <h1 class="font-semibold text-lg md:text-2xl">Inventory</h1>
+      <button class=" text-white bg-blue-500 justify-center ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 ml-auto">
+        + Add product
+      </button>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
+          <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Value</h3>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-4 w-4 text-gray-500 dark:text-gray-400"
+          >
+            <line x1="12" x2="12" y1="2" y2="22"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </div>
+        <div class="p-6">
+          <div class="text-2xl font-bold">$125,345</div>
+          <p class="text-xs text-gray-500 dark:text-gray-400">+5.2% from last month</p>
+        </div>
+      </div>
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
+          <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Inventory</h3>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-4 w-4 text-gray-500 dark:text-gray-400"
+          >
+            <path d="m7.5 4.27 9 5.15"></path>
+            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+            <path d="m3.3 7 8.7 5 8.7-5"></path>
+            <path d="M12 22V12"></path>
+          </svg>
+        </div>
+        <div class="p-6">
+          <div class="text-2xl font-bold">2,345</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div class="relative w-full overflow-auto">
+          <table class="w-full caption-bottom text-sm">
+            <thead class="[&amp;_tr]:border-b">
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Image
+                </th>
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Product
+                </th>
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Description
+                </th>
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Price
+                </th>
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Quantity
+                </th>
+                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="[&amp;_tr:last-child]:border-0">
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <img
+                    src="/placeholder.svg"
+                    width="64"
+                    height="64"
+                    alt="Product image"
+                    class="aspect-square rounded-md object-cover"
+                  />
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">Acme Widgets</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  High-quality widgets for all your needs.
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">$19.99</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">500</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex items-center gap-2">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                      </svg>
+                      <span class="sr-only">Edit</span>
+                    </button>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                      </svg>
+                      <span class="sr-only">Delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <img
+                    src="/placeholder.svg"
+                    width="64"
+                    height="64"
+                    alt="Product image"
+                    class="aspect-square rounded-md object-cover"
+                  />
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">Acme Gadgets</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  Innovative gadgets for the modern home.
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">$29.99</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">125</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex items-center gap-2">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                      </svg>
+                      <span class="sr-only">Edit</span>
+                    </button>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                      </svg>
+                      <span class="sr-only">Delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <img
+                    src="/placeholder.svg"
+                    width="64"
+                    height="64"
+                    alt="Product image"
+                    class="aspect-square rounded-md object-cover"
+                  />
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">Acme Thingamajigs</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  Unique and useful thingamajigs for your home.
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">$9.99</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">0</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex items-center gap-2">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                      </svg>
+                      <span class="sr-only">Edit</span>
+                    </button>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                      </svg>
+                      <span class="sr-only">Delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <img
+                    src="/placeholder.svg"
+                    width="64"
+                    height="64"
+                    alt="Product image"
+                    class="aspect-square rounded-md object-cover"
+                  />
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">Acme Doohickeys</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  Versatile doohickeys for all your needs.
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">$14.99</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">275</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex items-center gap-2">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                      </svg>
+                      <span class="sr-only">Edit</span>
+                    </button>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                      </svg>
+                      <span class="sr-only">Delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <img
+                    src="/placeholder.svg"
+                    width="64"
+                    height="64"
+                    alt="Product image"
+                    class="aspect-square rounded-md object-cover"
+                  />
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
+                  Acme Whatchamacallits
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  Unique whatchamacallits for the discerning customer.
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">$7.99</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">50</td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex items-center gap-2">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                      </svg>
+                      <span class="sr-only">Edit</span>
+                    </button>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4"
+                      >
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                      </svg>
+                      <span class="sr-only">Delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+  <section *ngIf="!dashboard_exists" class="h-screen flex justify-center items-center">
+    <p class="text-xl font-bold mb-4">Oops! No Inventory found</p>
+    <button (click)="createDashboard()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      + Create Your Dashboard
+    </button>
+  </section>
+</ng-container>
 
 
