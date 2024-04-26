@@ -4,7 +4,6 @@ import com.example.backend.model.DashboardEntity;
 import com.example.backend.model.ProductEntity;
 import com.example.backend.repository.DashboardRepository;
 import com.example.backend.repository.ProductRepository;
-import com.example.backend.request.CreateDashboardRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

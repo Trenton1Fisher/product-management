@@ -13,7 +13,7 @@ public class DashboardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String user_id;
-    private long total;
+    private double total;
     private long total_inventory;
 
     public long getId() {
@@ -24,7 +24,7 @@ public class DashboardEntity {
         return this.user_id;
     }
 
-    public long getTotal() {
+    public double getTotal() {
         return this.total;
     }
 
@@ -36,7 +36,7 @@ public class DashboardEntity {
         this.user_id = user_id;
     }
 
-    public void setTotal(long total){
+    public void setTotal(double total){
         this.total = total;
     }
 

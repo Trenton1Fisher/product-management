@@ -18,7 +18,7 @@ public class ProductEntity {
     private long id;
     private String name;
     private String description;
-    private long price;
+    private double price;
     private long quantity;
     private String img;
 
@@ -52,11 +52,15 @@ public class ProductEntity {
         this.description = description;
     }
 
-    public long getPrice() {
+    public void setDashboard_id(DashboardEntity dashboard) {
+        this.dashboard_id = dashboard;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
