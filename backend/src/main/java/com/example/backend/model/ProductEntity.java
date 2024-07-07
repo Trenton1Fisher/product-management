@@ -2,6 +2,8 @@ package com.example.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +20,7 @@ public class ProductEntity {
     private long id;
     private String name;
     private String description;
-    private double price;
+    private BigDecimal price;
     private long quantity;
     private String img;
 
@@ -56,11 +58,11 @@ public class ProductEntity {
         this.dashboard_id = dashboard;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

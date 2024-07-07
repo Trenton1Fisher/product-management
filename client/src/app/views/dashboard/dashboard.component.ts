@@ -8,7 +8,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 interface DashboardInfo {
   id: number,
   total: number,
-  totalInventory: bigint,
+  totalInventory: number,
 }
 
 interface Product {
@@ -16,7 +16,7 @@ interface Product {
   name: string,
   description: string
   price: number,
-  quantity: bigint,
+  quantity: number,
   img: string,
 }
 
@@ -36,6 +36,7 @@ interface DashboardReturn {
 export class Dashboard implements OnInit {
   session = this.supabase.session
   user_id?: string
+  edit_id = 0
   dashboard_exists = false
   page_loading = false
   form_loading = false
@@ -44,6 +45,13 @@ export class Dashboard implements OnInit {
   dashboard_content?: DashboardReturn
 
   addProductForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    description: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0)]],
+    quantity: [0, [Validators.required, Validators.min(0)]]
+  })
+
+  editProductForm = this.formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
@@ -105,7 +113,7 @@ export class Dashboard implements OnInit {
     if (!name || !quantity || !price) {
       return
     }
-    console.log(name, description, price, quantity)
+
     this.form_loading = true
     this.http.post<{ dashboard: DashboardInfo, product: Product }>("http://localhost:8080/addProduct", {
       name: name,
@@ -131,6 +139,42 @@ export class Dashboard implements OnInit {
   }
 
   editProduct(): void {
+    if (this.edit_id === 0) {
+      return
+    }
+    const name = this.editProductForm.value.name as string
+    const description = this.editProductForm.value.description as string
+    const price = this.editProductForm.value.price as number
+    const quantity = this.editProductForm.value.quantity as number
+
+    this.http.post<DashboardInfo>("http://localhost:8080/updateProduct", {
+      dashboard_id: this.dashboard_content?.dashboard.id,
+      product_id: this.edit_id,
+      name: name,
+      description: description,
+      price: price,
+      quantity: quantity
+    }).subscribe(response => {
+      if(!response){
+        alert("Unknown Error Please Refresh the Page")
+        return
+      }
+      if(this.dashboard_content){
+        this.dashboard_content.dashboard = response
+        const item = this.dashboard_content.products.find(item => item.id === this.edit_id)
+        if(item){
+          item.name = name
+          item.description = description
+          item.price = price
+          item.quantity = quantity
+        }
+        this.editProductForm.reset
+        this.openEditProduct = false
+        this.form_loading = false
+        this.cdr.detectChanges()
+      }
+    })
+
   }
 
   deleteProduct(product_id: number): void {
@@ -169,17 +213,22 @@ export class Dashboard implements OnInit {
     this.cdr.detectChanges()
   }
 
-  toggleEditModel(): void {
-    this.openEditProduct = !this.openEditProduct
+  toggleEditModel(id: number, name: string, description: string, price: number, quantity: number) {
+    this.edit_id = id
+    this.editProductForm.setValue({
+      name: name,
+      description: description,
+      price: price,
+      quantity: quantity,
+    })
+    this.openEditProduct = !this.openEditProduct;
+    this.cdr.detectChanges();
+  }
+
+  closeEditModel(): void {
+    this.openEditProduct = !this.openEditProduct;
+    this.cdr.detectChanges();
   }
 
 }
-
-
-
-
-
-
-
-
 
