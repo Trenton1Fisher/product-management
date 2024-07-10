@@ -4,6 +4,7 @@ import { SupabaseService } from '../../supabase.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ProductImage } from '../../components/productImage/productImage.component';
 
 interface DashboardInfo {
   id: number,
@@ -30,7 +31,7 @@ interface DashboardReturn {
   standalone: true,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ProductImage],
   providers: [HttpClientModule]
 })
 export class Dashboard implements OnInit {
@@ -42,20 +43,22 @@ export class Dashboard implements OnInit {
   form_loading = false
   openAddProduct = false
   openEditProduct = false
+  selectedFile: File | null = null;
   dashboard_content?: DashboardReturn
 
   addProductForm = this.formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
-    quantity: [0, [Validators.required, Validators.min(0)]]
+    quantity: [0, [Validators.required, Validators.min(0)]],
   })
 
   editProductForm = this.formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
-    quantity: [0, [Validators.required, Validators.min(0)]]
+    quantity: [0, [Validators.required, Validators.min(0)]],
+    imgUrl: ''
   })
 
   constructor(
@@ -104,7 +107,7 @@ export class Dashboard implements OnInit {
     });
   }
 
-  addProduct(): void {
+  async addProduct(): Promise<void> {
     const name = this.addProductForm.value.name as string
     const description = this.addProductForm.value.description as string
     const price = this.addProductForm.value.price as number
@@ -115,12 +118,24 @@ export class Dashboard implements OnInit {
     }
 
     this.form_loading = true
+    this.cdr.detectChanges()
+    if(this.selectedFile){
+      try{
+        const { error } = await this.supabase.addImage(this.selectedFile.name, this.selectedFile)
+        if(error){
+          console.log(error.message)
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
     this.http.post<{ dashboard: DashboardInfo, product: Product }>("http://localhost:8080/addProduct", {
       name: name,
       description: description,
       price: price,
       quantity: quantity,
-      dashboard_id: this.dashboard_content?.dashboard.id
+      dashboard_id: this.dashboard_content?.dashboard.id,
+      imgURL: this.selectedFile?.name
     }).subscribe(response => {
       if (!response) {
         alert("Unknown Error Please Double All Form Fields Are Filled or Refresh Page")
@@ -133,12 +148,13 @@ export class Dashboard implements OnInit {
         this.addProductForm.reset
         this.openAddProduct = false
         this.form_loading = false
+        this.selectedFile = null
         this.cdr.detectChanges()
       }
     });
   }
 
-  editProduct(): void {
+  async editProduct(): Promise<void> {
     if (this.edit_id === 0) {
       return
     }
@@ -146,6 +162,19 @@ export class Dashboard implements OnInit {
     const description = this.editProductForm.value.description as string
     const price = this.editProductForm.value.price as number
     const quantity = this.editProductForm.value.quantity as number
+    const imgUrl = this.editProductForm.value.imgUrl as string
+
+    if(this.selectedFile){
+      try{
+        await this.supabase.deleteImage(imgUrl)
+        const {data, error} = await this.supabase.addImage(this.selectedFile.name, this.selectedFile)
+        if(error){
+          console.log(error.message)
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
 
     this.http.post<DashboardInfo>("http://localhost:8080/updateProduct", {
       dashboard_id: this.dashboard_content?.dashboard.id,
@@ -153,7 +182,8 @@ export class Dashboard implements OnInit {
       name: name,
       description: description,
       price: price,
-      quantity: quantity
+      quantity: quantity,
+      imgURL: this.selectedFile?.name
     }).subscribe(response => {
       if(!response){
         alert("Unknown Error Please Refresh the Page")
@@ -167,9 +197,11 @@ export class Dashboard implements OnInit {
           item.description = description
           item.price = price
           item.quantity = quantity
+          item.img = this.selectedFile?.name || ''
         }
         this.editProductForm.reset
         this.openEditProduct = false
+        this.selectedFile = null
         this.form_loading = false
         this.cdr.detectChanges()
       }
@@ -177,7 +209,12 @@ export class Dashboard implements OnInit {
 
   }
 
-  deleteProduct(product_id: number): void {
+  async deleteProduct(product_id: number, imgUrl: string): Promise<void> {
+    console.log(imgUrl)
+    const {error} = await this.supabase.deleteImage(imgUrl)
+    if(error){
+      console.log(error.message)
+    }
     this.http.post<DashboardInfo>("http://localhost:8080/deleteProduct", {
       product_id: product_id,
       dashboard_id: this.dashboard_content?.dashboard.id
@@ -209,17 +246,20 @@ export class Dashboard implements OnInit {
 
   toggleAddModel(): void {
     this.openAddProduct = !this.openAddProduct
+    this.selectedFile = null
     this.addProductForm.reset()
     this.cdr.detectChanges()
   }
 
-  toggleEditModel(id: number, name: string, description: string, price: number, quantity: number) {
+  toggleEditModel(id: number, name: string, description: string, price: number, quantity: number, imgUrl: string) {
     this.edit_id = id
+    this.selectedFile = null
     this.editProductForm.setValue({
       name: name,
       description: description,
       price: price,
       quantity: quantity,
+      imgUrl: imgUrl
     })
     this.openEditProduct = !this.openEditProduct;
     this.cdr.detectChanges();
@@ -230,5 +270,10 @@ export class Dashboard implements OnInit {
     this.cdr.detectChanges();
   }
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
 }
-
+}

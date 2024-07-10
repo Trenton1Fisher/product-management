@@ -4,237 +4,250 @@
 
 <ng-container *ngIf="!page_loading">
   <div class="flex flex-col bg-gray-100 min-h-screen">
-  <header class="flex h-14 lg:h-[60px] items-center gap-4 border-b px-6">
-    <div class="w-full flex-1">
-      <form>
-        <div class="relative">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </svg>
-          <input
-            class="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white border shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
-            placeholder="Search inventory..."
-            type="search"
-          />
+    <header class="flex h-14 lg:h-[60px] items-center gap-4 border-b px-6">
+      <div class="w-full flex-1">
+        <form>
+          <div class="relative">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <input
+              class="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white border shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
+              placeholder="Search inventory..." type="search" />
+          </div>
+        </form>
+      </div>
+      <button type="" (click)="signOut()"
+        class="text-white font-bold text-lg p-2 bg-red-500 rounded-lg hover:bg-red-700">Sign Out</button>
+    </header>
+    <main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+      <div class="flex items-center">
+        <h1 class="font-semibold text-lg md:text-2xl">Inventory</h1>
+        <button (click)="toggleAddModel()"
+          class=" text-white bg-blue-500 justify-center ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 ml-auto">
+          + Add product
+        </button>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+          <div class="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
+            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Value</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="h-4 w-4 text-gray-500 dark:text-gray-400">
+              <line x1="12" x2="12" y1="2" y2="22"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <div class="text-2xl font-bold">$ {{ this.dashboard_content ? this.dashboard_content.dashboard.total : '0'}}
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
-    <button type="" (click)="signOut()" class="text-white font-bold text-lg p-2 bg-red-500 rounded-lg hover:bg-red-700">Sign Out</button>
-  </header>
-  <main class="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-    <div class="flex items-center">
-      <h1 class="font-semibold text-lg md:text-2xl">Inventory</h1>
-      <button (click)="toggleAddModel()" class=" text-white bg-blue-500 justify-center ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 ml-auto">
-        + Add product
-      </button>
-    </div>
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-        <div class="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
-          <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Value</h3>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4 text-gray-500 dark:text-gray-400"
-          >
-            <line x1="12" x2="12" y1="2" y2="22"></line>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-          </svg>
-        </div>
-        <div class="p-6">
-          <div class="text-2xl font-bold">$ {{ this.dashboard_content ? this.dashboard_content.dashboard.total : '0'}}</div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+          <div class="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
+            <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Inventory</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="h-4 w-4 text-gray-500 dark:text-gray-400">
+              <path d="m7.5 4.27 9 5.15"></path>
+              <path
+                d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z">
+              </path>
+              <path d="m3.3 7 8.7 5 8.7-5"></path>
+              <path d="M12 22V12"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <div class="text-2xl font-bold">{{ this.dashboard_content ? this.dashboard_content.dashboard.totalInventory
+              : '0'}}</div>
+          </div>
         </div>
       </div>
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-        <div class="p-6 flex flex-row items-center justify-between pb-2 space-y-0">
-          <h3 class="whitespace-nowrap tracking-tight text-sm font-medium">Total Inventory</h3>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4 text-gray-500 dark:text-gray-400"
-          >
-            <path d="m7.5 4.27 9 5.15"></path>
-            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
-            <path d="m3.3 7 8.7 5 8.7-5"></path>
-            <path d="M12 22V12"></path>
-          </svg>
-        </div>
-        <div class="p-6">
-          <div class="text-2xl font-bold">{{ this.dashboard_content ? this.dashboard_content.dashboard.totalInventory : '0'}}</div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
-        <div class="relative w-full overflow-auto">
-          <table class="w-full caption-bottom text-sm">
-            <thead class="[&amp;_tr]:border-b">
-              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Image
-                </th>
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Product
-                </th>
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Description
-                </th>
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Price
-                </th>
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Quantity
-                </th>
-                <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody *ngIf="dashboard_content && dashboard_content.products.length > 0" class="[&amp;_tr:last-child]:border-0">
-              <ng-container *ngFor="let product of dashboard_content.products">
+      <div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+          <div class="relative w-full overflow-auto">
+            <table class="w-full caption-bottom text-sm">
+              <thead class="[&amp;_tr]:border-b">
                 <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                    <img
-                    [src]="product.img"
-                    width="64"
-                    height="64"
-                    alt="Product image"
-                    class="aspect-square rounded-md object-cover"
-                    />
-                  </td>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{ product.name }}</td>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ product.description }}</td>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">$ {{ product.price }}</td>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ product.quantity }}</td>
-                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                    <div class="flex items-center gap-2">
-                      <button (click)="toggleEditModel(product.id, product.name, product.description, product.price, product.quantity)" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="h-4 w-4"
-                          >
-                          <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
-                          <polyline points="14 2 14 8 20 8"></polyline>
-                          <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
-                        </svg>
-                        <span class="sr-only">Edit</span>
-                      </button>
-                      <button (click)="deleteProduct(product.id)" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="h-4 w-4"
-                          >
-                          <path d="M3 6h18"></path>
-                          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                        </svg>
-                        <span class="sr-only">Delete</span>
-                      </button>
-                    </div>
-                  </td>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                    Image
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                    Product
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                    Description
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                    Price
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                    Quantity
+                  </th>
+                  <th
+                    class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                    Actions
+                  </th>
                 </tr>
-              </ng-container>
-            </tbody>
-          </table>
+              </thead>
+              <tbody *ngIf="dashboard_content && dashboard_content.products.length > 0"
+                class="[&amp;_tr:last-child]:border-0">
+                <ng-container *ngFor="let product of dashboard_content.products">
+                  <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                        <product-image [url]="product.img"></product-image>
+                    </td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{ product.name }}</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ product.description }}</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">$ {{ product.price }}</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ product.quantity }}</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                      <div class="flex items-center gap-2">
+                        <button
+                          (click)="toggleEditModel(product.id, product.name, product.description, product.price, product.quantity, product.img)"
+                          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="h-4 w-4">
+                            <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                          </svg>
+                          <span class="sr-only">Edit</span>
+                        </button>
+                        <button (click)="deleteProduct(product.id, product.img)"
+                          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 text-red-500">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="h-4 w-4">
+                            <path d="M3 6h18"></path>
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                          </svg>
+                          <span class="sr-only">Delete</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div *ngIf="openAddProduct" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    id="my-modal">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div class="mt-3 text-center">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Add Product</h3>
+        <div class="mt-2 px-7 py-3">
+          <form class="space-y-4" [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+            <div class="text-left">
+              <label for="product-name" class="block text-sm font-medium text-gray-700">Name</label>
+              <input id="product-name" type="text" required placeholder="Name" formControlName="name"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="text-left">
+              <label for="product-description" class="block text-sm font-medium text-gray-700">Description</label>
+              <textarea id="product-description" placeholder="Description" formControlName="description"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+            </div>
+            <div class="text-left">
+              <label for="product-price" class="block text-sm font-medium text-gray-700">Price</label>
+              <input id="product-price" type="number" required placeholder="Price" formControlName="price"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="text-left">
+              <label for="product-quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+              <input id="product-quantity" type="number" required placeholder="Quantity" formControlName="quantity"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="text-left">
+              <label for="product-image" class="block text-sm font-medium text-gray-700">Image</label>
+              <input id="product-image" type="file" (change)="onFileSelected($event)"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="items-center px-4 py-2">
+              <button [disabled]="form_loading" id="submit"
+                class="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                {{ form_loading && openAddProduct ? 'Adding...' : 'Add Product' }}
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="items-center px-4 py-2">
+          <button (click)="toggleAddModel()"
+            class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            Close
+          </button>
         </div>
       </div>
     </div>
-  </main>
-</div>
+  </div>
 
-<div *ngIf="openAddProduct" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
-  <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-    <div class="mt-3 text-center">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">Add Product</h3>
-      <div class="mt-2 px-7 py-3">
-        <form class="space-y-4" [formGroup]="addProductForm" (ngSubmit)="addProduct()">
-          <input type="text" required placeholder="Name" formControlName="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          <textarea placeholder="Description" formControlName="description" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
-          <input type="number" required placeholder="Price" formControlName="price" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          <input type="number" required placeholder="Quantity" formControlName="quantity" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          <div class="items-center px-4 py-3">
-            <button [disabled]="form_loading" id="submit" class="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-              {{ form_loading && openAddProduct ? 'Adding...' : 'Add Product' }}
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="items-center px-4 py-3">
-        <button (click)="toggleAddModel()" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-          Close
-        </button>
+
+  <div *ngIf="openEditProduct" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+    id="my-modal">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div class="mt-3 text-center">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Edit Product</h3>
+        <div class="mt-2 px-7 py-3">
+          <form class="space-y-4" [formGroup]="editProductForm" (ngSubmit)="editProduct()">
+            <div class="text-left">
+              <label for="edit-product-name" class="block text-sm font-medium text-gray-700">Name</label>
+              <input id="edit-product-name" type="text" required placeholder="Name" formControlName="name"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="text-left">
+              <label for="edit-product-description" class="block text-sm font-medium text-gray-700">Description</label>
+              <textarea id="edit-product-description" placeholder="Description" formControlName="description"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+            </div>
+            <div class="text-left">
+              <label for="edit-product-price" class="block text-sm font-medium text-gray-700">Price</label>
+              <input id="edit-product-price" type="number" required placeholder="Price" formControlName="price"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="text-left">
+              <label for="edit-product-quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+              <input id="edit-product-quantity" type="number" required placeholder="Quantity" formControlName="quantity"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="text-left">
+              <label for="product-image" class="block text-sm font-medium text-gray-700">Image</label>
+              <input id="product-image" type="file" (change)="onFileSelected($event)"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="items-center px-4 py-2">
+              <button [disabled]="form_loading" id="submit"
+                class="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                {{ form_loading && openEditProduct ? 'Updating...' : 'Update Product' }}
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="items-center px-4 py-2">
+          <button (click)="closeEditModel()"
+            class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="openEditProduct" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
-  <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-    <div class="mt-3 text-center">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">Edit Product</h3>
-      <div class="mt-2 px-7 py-3">
-        <form class="space-y-4" [formGroup]="editProductForm" (ngSubmit)="editProduct()">
-          <input type="text" required placeholder="Name" formControlName="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          <textarea placeholder="Description" formControlName="description" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
-          <input type="number" required placeholder="Price" formControlName="price" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          <input type="number" required placeholder="Quantity" formControlName="quantity" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          <div class="items-center px-4 py-3">
-            <button [disabled]="form_loading" id="submit" class="px-4 py-2 bg-indigo-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-              {{ form_loading && openEditProduct ? 'Updating...' : 'Update Product' }}
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="items-center px-4 py-3">
-        <button (click)="closeEditModel()" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
   <section *ngIf="!dashboard_exists" class="h-screen flex justify-center items-center">
@@ -244,5 +257,3 @@
     </button>
   </section>
 </ng-container>
-
-

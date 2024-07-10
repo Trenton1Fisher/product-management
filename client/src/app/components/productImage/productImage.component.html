@@ -1,0 +1,10 @@
+<div>
+  <img
+    *ngIf="_productImageUrl && !loading"
+    [src]="_productImageUrl"
+    alt="Product Image"
+    style="height: 75px; width: 75px"
+    class="rounded"
+  />
+  <mat-spinner class="image-spinner" *ngIf="loading"></mat-spinner>
+</div>

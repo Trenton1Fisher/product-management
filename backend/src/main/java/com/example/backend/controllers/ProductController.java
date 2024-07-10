@@ -36,8 +36,10 @@ public class ProductController {
     public ResponseEntity<Map<String,Object>> addProduct(@RequestBody Map<String, Object> request) {
         String name = (String) request.get("name");
         String description = (String) request.get("description");
+        String imgURL =  (String) request.get("imgURL");
         int quantity = (int) request.get("quantity");
         long dashboard_id = (int) request.get("dashboard_id");
+
 
         Object priceObj = request.get("price");
         BigDecimal price = BigDecimal.ZERO;
@@ -54,6 +56,7 @@ public class ProductController {
         product.setDescription(description);
         product.setPrice(price);
         product.setQuantity(quantity);
+        product.setImg(imgURL);
 
         DashboardEntity dashboard = dashboardRepository.getDashboardById(dashboard_id).orElse(null);
         if (dashboard == null) {
@@ -113,6 +116,7 @@ public class ProductController {
     @Transactional
     public ResponseEntity<DashboardEntity> updateProduct(@RequestBody Map<String, Object> request) {
         long product_id = Long.parseLong(request.get("product_id").toString());
+        String imgURL =  (String) request.get("imgURL");
 
         long dashboard_id = 0;
         if (request.get("dashboard_id") instanceof Integer) {
@@ -161,7 +165,7 @@ public class ProductController {
             newQuantity = newQuantity + quantity;
             dashboard.setTotalInventory(newQuantity);
 
-            productRepository.updateProduct(product_id, name, description, price, quantity);
+            productRepository.updateProduct(product_id, name, description, price, quantity, imgURL);
             saved_dashboard = dashboardRepository.save(dashboard);
             return ResponseEntity.ok(saved_dashboard);
         }

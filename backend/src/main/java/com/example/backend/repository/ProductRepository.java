@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     Optional<ProductEntity> getProductsById(@Param("product_id") long product_id);
 
     @Modifying
-    @Query("UPDATE ProductEntity p SET p.name = :name, p.description = :description, p.price = :price, p.quantity = :quantity WHERE p.id = :productId")
-    void updateProduct(@Param("productId") long productId, @Param("name") String name, @Param("description") String description, @Param("price") BigDecimal price, @Param("quantity") long quantity);
+    @Query("UPDATE ProductEntity p SET p.name = :name, p.description = :description, p.price = :price, p.quantity = :quantity, p.img = :img WHERE p.id = :productId")
+    void updateProduct(@Param("productId") long productId, @Param("name") String name, @Param("description") String description, @Param("price") BigDecimal price, @Param("quantity") long quantity, @Param("img") String img);
 
 }

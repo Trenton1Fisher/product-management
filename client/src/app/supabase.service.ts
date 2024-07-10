@@ -40,6 +40,18 @@ export class SupabaseService {
     return this.supabase.auth.onAuthStateChange(callback);
   }
 
+  addImage(imgPath: string, file: File){
+    return this.supabase.storage.from('product-management/products').upload(imgPath, file)
+  }
+
+  getImage(imgPath: string){
+    return this.supabase.storage.from('product-management/products').download(imgPath)
+  }
+
+  deleteImage(imgPath: string){
+    return this.supabase.storage.from(`product-management/products/${imgPath}`).remove([`/${imgPath}`])
+  }
+
   signIn(email: string, password: string) {
     return this.supabase.auth.signInWithPassword({ email, password });
   }
