@@ -158,6 +158,8 @@ export class Dashboard implements OnInit {
     if (this.edit_id === 0) {
       return
     }
+    this.form_loading = true
+    this.cdr.detectChanges()
     const name = this.editProductForm.value.name as string
     const description = this.editProductForm.value.description as string
     const price = this.editProductForm.value.price as number
@@ -205,6 +207,8 @@ export class Dashboard implements OnInit {
         this.form_loading = false
         this.cdr.detectChanges()
       }
+        this.form_loading = false
+        this.cdr.detectChanges()
     })
 
   }

@@ -6,19 +6,11 @@
   <div class="flex flex-col bg-gray-100 min-h-screen">
     <header class="flex h-14 lg:h-[60px] items-center gap-4 border-b px-6">
       <div class="w-full flex-1">
-        <form>
-          <div class="relative">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </svg>
-            <input
-              class="flex h-10 rounded-md border border-input px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full bg-white border shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3"
-              placeholder="Search inventory..." type="search" />
-          </div>
-        </form>
+          <a class="flex items-center" href="/">
+            <img class="mr-2" height="50" width="50"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAACmElEQVR4nO2a0WvTUBjFj4I+TfamT5uajLVF91Zl0IwNrdqN/gGKmz7tof+Nj3aIMNgcDCRWscFVuyKCIDSgIFg3kdU3B4oL6MvwkzsvWro267Ikt12+A+cluUnu+d17v5tAABaLxWKxWCwWa5eoNHaTKpObVMmSZ5czRItQ5S+0gEl4Fa1OfT1QeOFnoyoBEC2g7h1AxSXYxjLR721qKXFcnBftHp5UC2ARFAyA7V/kKnH+SUx5+OAAbOwxAz7cUR48OACFs8pDqQVgDkQcQPkq0dLxCABYddkGn55XHiz4bXBl/EZbCC+u9ER4eoCMZwCNok852mU70bWG3yIGkOMZQLwEcvuuAU7JoOL0HN0fLdO95MuOLNoWZ/LkPE/1fg0oTs91HLzZ1q187wOYN0qeAcynVnofQHEmH+0Z4JSMnSD7rQHW7buHowaQIjMAv0XNo78+G/EZULsecQDvUhEG8H5KecBWdl7FqG4N0VpBDwDA+uzfad+lI79ZHqaaqf+z/wBs9SHdRr4xfOQA1K2haANYK+jRBlBrCs8ATJ4BxEvAb1EXrHWuATYXQeJdwOZtkPg9wP4P4efr+OF6EXIaPmlbBevU/gOoJrbC/qT1bm0rAABxM+iR9ye8Th8fawX/AbyNxaga/xbmJ60nP9K/f7ZOn/EdgBC9OTdA1fgy2YkffgM46JqvmZojRj6w8CwWi+WiYwD6AZwCMAhgGMAIgAsADABjACYAXAKQBnAN2Pl9LSudkcfSss2EvMaQ9xiR9xyUz+iXz1SmEwB0ABdlp7OKnJZ9EH3pCyP4UQBJhYH3clL2MdIAjiAE9QHQ5PpUuQQuyz5oYS0BtJFbEUzJgjYuC5zodLsiKM6JNqKtuEZcG2gR/ANhyapv+/VSmwAAAABJRU5ErkJggg==" />
+            <h3 class="fong-extrabold text-2xl">Product Pro</h3>
+          </a>
       </div>
       <button type="" (click)="signOut()"
         class="text-white font-bold text-lg p-2 bg-red-500 rounded-lg hover:bg-red-700">Sign Out</button>
@@ -104,7 +96,7 @@
                 <ng-container *ngFor="let product of dashboard_content.products">
                   <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                     <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                        <product-image [url]="product.img"></product-image>
+                      <product-image [url]="product.img"></product-image>
                     </td>
                     <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{ product.name }}</td>
                     <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ product.description }}</td>
